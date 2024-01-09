@@ -1,9 +1,12 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
+from sklearn.preprocessing import StandardScaler
 
 # Load data
 df = pd.read_csv('./rawdata.csv')
+scaler = StandardScaler()
+df[['X', 'Y']] = scaler.fit_transform(df[['X', 'Y']])
 
 # Create a 3D plot
 fig = plt.figure()
