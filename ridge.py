@@ -8,16 +8,21 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 df = pd.read_csv('./rawdata.csv')
+
+# Remove entries where Z value is 0
+df_r = df[df['Z'] != 0]
+
 # scaler = MinMaxScaler()
 scaler = StandardScaler()
+df_r[['X', 'Y']] = scaler.fit_transform(df_r[['X', 'Y']])
 df[['X', 'Y']] = scaler.fit_transform(df[['X', 'Y']])
 
-descriptive_stats = df.describe()
+descriptive_stats = df_r.describe()
 print(descriptive_stats)
 
 # Assuming 'df' is your DataFrame
-X = df[['X', 'Y']]  # Features
-y = df['Z']        # Target variable
+X = df_r[['X', 'Y']]  # Features
+y = df_r['Z']        # Target variable
 
 # Split the data into training + validation and testing sets
 X_train_val, X_test, y_train_val, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
